@@ -45,4 +45,17 @@ const projects = defineCollection({
     })
 });
 
-export const collections = { blog, pages, projects };
+const gear = defineCollection({
+    loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/gear' }),
+    schema: z.object({
+        title: z.string(),
+        excerpt: z.string().optional(),
+        publishDate: z.coerce.date(),
+        updatedDate: z.coerce.date().optional(),
+        isFeatured: z.boolean().default(false),
+        tags: z.array(z.string()).default([]),
+        seo: seoSchema.optional()
+    })
+});
+
+export const collections = { blog, pages, projects, gear };
